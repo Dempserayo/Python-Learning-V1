@@ -3,7 +3,7 @@ import zoneinfo
 from fastapi import FastAPI
 from datetime import datetime
 
-from models import Customer
+from models import Customer, CustomerCreate
 from models import Transaction
 from models import Invoice
 
@@ -32,9 +32,21 @@ async def view_time(iso_code: str):
     return {"time": datetime.now(tz),}
 
 
-@app.post("/customers")
-async def create_customer(customer_data: Customer):
-    return customer_data
+db_customers: list[Customer] = []
+
+@app.post("/customers", response_model= Customer)
+async def list_customer(customer_data: CustomerCreate):
+    customer = Customer.model_validate(customer_data.model_dump())
+    
+    #Asumiendo que se hace base de datos
+    customer.id = len(db_customers)
+    db_customers.append(customer)
+    return customer
+
+@app.get("/customers",response_model=list[Customer])
+async def list_customer():
+    return db_customers
+
 
 @app.post("/transaction")
 async def create_transaction(transaction_data: Transaction):
