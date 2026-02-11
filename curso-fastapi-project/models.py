@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 class Customer(BaseModel):
     id: int
     name: str
     description: str | None
-    email: str
+    email: EmailStr
     age: int
 
 class Transaction(BaseModel):

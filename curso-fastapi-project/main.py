@@ -25,7 +25,7 @@ async def root():
 
 
 @app.get("/time/{iso_code}")
-async def time(iso_code: str):
+async def view_time(iso_code: str):
     iso = iso_code.upper()
     timezone_str = country_timezone.get(iso)
     tz = zoneinfo.ZoneInfo(timezone_str)
