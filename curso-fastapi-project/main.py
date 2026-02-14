@@ -45,7 +45,7 @@ async def create_customer(customer_data: CustomerCreate, session: SessionDep ):
     return customer
 
 @app.get("/customers",response_model=list[Customer])
-async def create_customer():
+async def list_customer():
     return db_customers
 
 
