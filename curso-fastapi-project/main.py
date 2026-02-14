@@ -6,11 +6,11 @@ from datetime import datetime
 from models import Customer, CustomerCreate
 from models import Transaction
 from models import Invoice
-from db import SessionDep
+from db import SessionDep, create_all_table  # pyright: ignore[reportMissingImports]
 
 
 
-app = FastAPI()
+app = FastAPI(lifespan=create_all_table)
 
 country_timezone = {
     'CO': 'America/Bogota',
