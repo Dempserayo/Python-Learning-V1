@@ -6,6 +6,7 @@ from datetime import datetime
 from models import Customer, CustomerCreate
 from models import Transaction
 from models import Invoice
+from db import SessionDep
 
 
 
@@ -35,7 +36,7 @@ async def view_time(iso_code: str):
 db_customers: list[Customer] = []
 
 @app.post("/customers", response_model= Customer)
-async def list_customer(customer_data: CustomerCreate):
+async def create_customer(customer_data: CustomerCreate, session: SessionDep ):
     customer = Customer.model_validate(customer_data.model_dump())
     
     #Asumiendo que se hace base de datos
@@ -44,7 +45,7 @@ async def list_customer(customer_data: CustomerCreate):
     return customer
 
 @app.get("/customers",response_model=list[Customer])
-async def list_customer():
+async def create_customer():
     return db_customers
 
 
